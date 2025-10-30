@@ -1,0 +1,36 @@
+#include "Rectangle.hpp"
+
+void Rectangle::draw() {
+    cout << "Drawing " << endl;
+    cout << "Dimension : " << height << ',' << width << endl;
+}
+
+int Rectangle::getArea() {
+    return height * width;
+}
+
+short Rectangle::getWidth() const {
+    return width;
+}
+
+void Rectangle::setWidth(short newWidth) {
+    if(newWidth < 0) {
+        throw invalid_argument("Width");
+    }
+    this->width = newWidth;
+}
+
+Rectangle::Rectangle(short w) : width{w} {
+    count++;
+};
+
+Rectangle::~Rectangle() {
+    cout << "Destructor" << endl;
+}
+
+short Rectangle::count = 0;
+
+bool Rectangle::operator==(const Rectangle& rect) const {
+    cout << "Checking equality" << endl;
+    return true;
+}

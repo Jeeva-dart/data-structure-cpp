@@ -1,0 +1,78 @@
+#include<iostream>
+#include<fstream>
+#include<iomanip>
+#include<vector>
+using namespace std;
+
+struct FileContent
+{
+    string header;
+    string lang;
+};
+
+ostream& operator<<(ostream& stream, const FileContent& fcontent) {
+    stream << "Header => " << fcontent.header << endl
+           << "Lang => " << fcontent.lang << endl;
+    return stream;
+}
+
+
+bool createFile(const string& fileName) {
+    ofstream file;
+    file.open(fileName);
+    if(file.is_open()) {
+        file << "Header,language\n";
+        file << "Hello C++,C++\n";
+        file.close();
+        cout << "File writted";
+        return true;
+    }
+    return false;
+}
+
+bool createBinaryFile() {
+    ofstream fstream("int.bin", ios::binary);
+    const int intNumbers[] = {120, 12, 54};
+    const short shortNumbers[] = {120, 12, 54};
+    if(fstream.is_open()) {
+        fstream.write(reinterpret_cast<const char*>(&intNumbers), sizeof(intNumbers));
+        fstream.close();
+    }
+    // reopen the same ofstream for the short numbers
+    fstream.open("short.bin", ios::binary);
+    if(fstream.is_open()) {
+        fstream.write(reinterpret_cast<const char*>(&shortNumbers), sizeof(shortNumbers));
+        fstream.close();
+    }
+    return true;
+}
+
+vector<FileContent> readFile(const string& fileName) {
+    vector<FileContent> content {};
+    ifstream file;
+    file.open(fileName);
+    if(file.is_open()) {
+        string tmp;
+        while(!file.eof()) {
+            FileContent fcontent;
+            getline(file, tmp, ',');
+            if(tmp == "") break;
+            fcontent.header = tmp;
+            getline(file, tmp);
+            fcontent.lang = tmp;
+            content.push_back(fcontent);
+        }
+        file.close();
+    }
+    return content;
+}
+
+int main() {
+    double number = 1.23;
+    cout << fixed << setprecision(2) << number <<endl;
+    ostringstream streambuf;
+    streambuf << fixed << setprecision(2) << number;
+    string str = streambuf.str();
+    cout << str << endl;
+    return 0;
+}
