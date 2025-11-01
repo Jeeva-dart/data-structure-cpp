@@ -133,7 +133,8 @@
     "stack": "cpp",
     "__functional_base": "cpp",
     "__node_handle": "cpp",
-    "__memory": "cpp"
+    "__memory": "cpp",
+    "version": "cpp"
   },
   "c-cpp-compile-run.cpp-compiler": "g++",
   "c-cpp-compile-run.cpp-flags": "-Wall -Wextra -std=c++23",
